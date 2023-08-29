@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class StudentConvertorTest {
 
@@ -18,9 +17,11 @@ public class StudentConvertorTest {
     //·	Given a list with a student object of age 21 or above and grade above 90, the function should return a list with object with the additional field HonorRoll = true.
     @Test
     public void shouldGetHonorableStudents() {
-        var student1 = TestEntitiesFactory.getStudent(getRandomIntInRange(21, 100), getRandomIntInRange(90, 100));
-        var student2 = TestEntitiesFactory.getStudent(getRandomIntInRange(21, 100), getRandomIntInRange(90, 100));
-        var student3 = TestEntitiesFactory.getStudent(getRandomIntInRange(21, 100), getRandomIntInRange(90, 100));
+        int age = 35;
+        int score = 91;
+        var student1 = TestEntitiesFactory.getStudent(age, score);
+        var student2 = TestEntitiesFactory.getStudent(age, ++score);
+        var student3 = TestEntitiesFactory.getStudent(age, ++score);
 
         var result = service.convertStudents(List.of(student1, student2, student3));
 
@@ -31,9 +32,11 @@ public class StudentConvertorTest {
     //·	Given a list with a student object of age less than 21 and grade above 90, the function should return a list with object with the additional field Exceptional = true.
     @Test
     public void shouldGetExceptionalStudents() {
-        var student1 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 20), getRandomIntInRange(90, 100));
-        var student2 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 20), getRandomIntInRange(90, 100));
-        var student3 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 20), getRandomIntInRange(90, 100));
+        int age = 17;
+        int score = 91;
+        var student1 = TestEntitiesFactory.getStudent(age, score);
+        var student2 = TestEntitiesFactory.getStudent(age, ++score);
+        var student3 = TestEntitiesFactory.getStudent(age, ++score);
 
         var result = service.convertStudents(List.of(student1, student2, student3));
 
@@ -44,9 +47,11 @@ public class StudentConvertorTest {
     //·	Given a list with a student object of grade between 71 and 90 (inclusive), the function should return a list with object with the additional field Passed = true.
     @Test
     public void shouldPassedStudents() {
-        var student1 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 100), getRandomIntInRange(71, 91));
-        var student2 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 100), getRandomIntInRange(71, 91));
-        var student3 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 20), getRandomIntInRange(71, 91));
+        int age = 35;
+        int score = 90;
+        var student1 = TestEntitiesFactory.getStudent(age, score);
+        var student2 = TestEntitiesFactory.getStudent(age, --score);
+        var student3 = TestEntitiesFactory.getStudent(age, 71);
 
         var result = service.convertStudents(List.of(student1, student2, student3));
 
@@ -57,9 +62,11 @@ public class StudentConvertorTest {
     //·	Given a list with a student object of grade 70 or less, the function should return a list with object with the additional field Passed = false.
     @Test
     public void shouldFailedStudents() {
-        var student1 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 100), getRandomIntInRange(0, 71));
-        var student2 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 100), getRandomIntInRange(0, 71));
-        var student3 = TestEntitiesFactory.getStudent(getRandomIntInRange(5, 20), getRandomIntInRange(0, 71));
+        int age = 35;
+        int score = 70;
+        var student1 = TestEntitiesFactory.getStudent(age, score);
+        var student2 = TestEntitiesFactory.getStudent(age, --score);
+        var student3 = TestEntitiesFactory.getStudent(age, --score);
 
         var result = service.convertStudents(List.of(student1, student2, student3));
 
@@ -82,10 +89,5 @@ public class StudentConvertorTest {
         var result = service.convertStudents(null);
         Assert.fail("Should've thrown NPE");
 
-    }
-
-    private int getRandomIntInRange(int lowerBound, int higherBound) {
-        Random random = new Random();
-        return random.nextInt(higherBound - lowerBound) + lowerBound;
     }
 }

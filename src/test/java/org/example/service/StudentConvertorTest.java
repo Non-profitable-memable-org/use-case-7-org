@@ -86,7 +86,7 @@ public class StudentConvertorTest {
     //•	Given a null as an input the function should throw an error.
     @Test(expected = NullPointerException.class)
     public void shouldThrowAnError() {
-        var result = service.convertStudents(null);
+        service.convertStudents(null);
         Assert.fail("Should've thrown NPE");
 
     }

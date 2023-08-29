@@ -1,6 +1,7 @@
 package org.example.util;
 
 import lombok.experimental.UtilityClass;
+import org.example.model.Player;
 import org.example.model.Student;
 
 import java.util.List;
@@ -18,9 +19,21 @@ public class TestEntitiesFactory {
 
     }
 
+    public static Player getPlayer(int age, int experience) {
+        var player = new Player();
+        player.setName(randomName());
+        player.setAge(age);
+        player.setExperience(experience);
+
+        return player;
+
+    }
+
     private static String randomName() {
         var listOfNames = List.of("John", "Jack", "Antony", "Taras", "Rajet", "Xi", "Joe", "Donald", "Sofi", "Oksana");
 
         return listOfNames.get(new Random().nextInt(listOfNames.size()));
     }
+
+
 }
